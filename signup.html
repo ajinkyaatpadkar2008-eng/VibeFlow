@@ -7,12 +7,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1, viewport-fit=cover"
-    >
-
-    <meta
-        name="theme-color"
-        content="#08070c"
+        content="width=device-width, initial-scale=1.0"
     >
 
     <title>Create Account — VibeFlow</title>
@@ -22,165 +17,224 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <link rel="stylesheet" href="auth.css">
+    <link
+        rel="stylesheet"
+        href="auth.css"
+    >
 
 </head>
-
 
 <body>
 
 <div class="auth-page">
 
-    <div class="auth-card">
+    <!-- BACKGROUND -->
 
-        <a
-            href="index.html"
-            class="auth-logo"
-        >
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
 
-            <span class="auth-logo-icon">
+
+    <main class="auth-container">
+
+        <!-- LOGO -->
+
+        <div class="auth-logo">
+
+            <div class="logo-icon">
                 <i class="fa-solid fa-wave-square"></i>
-            </span>
+            </div>
 
-            <strong>
+            <span>
                 Vibe<span>Flow</span>
-            </strong>
-
-        </a>
-
-
-        <div class="auth-heading">
-
-            <h1>
-                Create your account
-            </h1>
-
-            <p>
-                Join VibeFlow and save your music.
-            </p>
+            </span>
 
         </div>
 
 
-        <form
-            id="signupForm"
-            class="auth-form"
-        >
+        <!-- CARD -->
 
-            <label for="signupName">
-                Name
-            </label>
+        <section class="auth-card">
 
-            <input
-                id="signupName"
-                type="text"
-                placeholder="Your name"
-                autocomplete="name"
-                minlength="2"
-                required
-            >
+            <div class="auth-heading">
 
+                <h1>Create your account</h1>
 
-            <label for="signupEmail">
-                Email
-            </label>
-
-            <input
-                id="signupEmail"
-                type="email"
-                placeholder="you@example.com"
-                autocomplete="email"
-                required
-            >
-
-
-            <label for="signupPassword">
-                Password
-            </label>
-
-            <div class="password-field">
-
-                <input
-                    id="signupPassword"
-                    type="password"
-                    placeholder="At least 6 characters"
-                    autocomplete="new-password"
-                    minlength="6"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="password-toggle"
-                    data-target="signupPassword"
-                >
-                    <i class="fa-solid fa-eye"></i>
-                </button>
+                <p>
+                    Join VibeFlow and build your music world.
+                </p>
 
             </div>
 
 
-            <label for="signupConfirm">
-                Confirm password
-            </label>
-
-            <div class="password-field">
-
-                <input
-                    id="signupConfirm"
-                    type="password"
-                    placeholder="Repeat your password"
-                    autocomplete="new-password"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="password-toggle"
-                    data-target="signupConfirm"
-                >
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-
-            </div>
-
-
-            <button
-                type="submit"
-                class="auth-submit"
-            >
-                Create account
-            </button>
-
+            <!-- MESSAGE -->
 
             <div
-                id="signupMessage"
+                id="authMessage"
                 class="auth-message"
             ></div>
 
-        </form>
+
+            <!-- SIGNUP FORM -->
+
+            <form
+                id="signupForm"
+                autocomplete="on"
+            >
+
+                <!-- USERNAME -->
+
+                <div class="input-group">
+
+                    <label for="signupUsername">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            id="signupUsername"
+                            type="text"
+                            placeholder="Choose a username"
+                            autocomplete="username"
+                            minlength="3"
+                            maxlength="20"
+                            required
+                        >
+
+                    </div>
+
+                </div>
 
 
-        <p class="auth-switch">
+                <!-- PASSWORD -->
 
-            Already have an account?
+                <div class="input-group">
 
-            <a href="login.html">
-                Login
-            </a>
+                    <label for="signupPassword">
+                        Password
+                    </label>
 
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            id="signupPassword"
+                            type="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="signupPassword"
+                        >
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        Confirm password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="Repeat your password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="confirmPassword"
+                        >
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <span>
+                        I agree to use VibeFlow responsibly.
+                    </span>
+
+                </label>
+
+
+                <!-- SIGNUP -->
+
+                <button
+                    type="submit"
+                    class="auth-submit"
+                >
+
+                    <span>Create account</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="auth-switch">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a href="login.html">
+                    Sign in
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <p class="auth-footer">
+            © 2026 VibeFlow · Music for your mood.
         </p>
 
-
-        <a
-            href="index.html"
-            class="back-home"
-        >
-            <i class="fa-solid fa-arrow-left"></i>
-            Back to VibeFlow
-        </a>
-
-    </div>
+    </main>
 
 </div>
 
