@@ -897,3 +897,104 @@ input[type="range"]::-webkit-slider-thumb {
     color: #ec4899;
 }
 
+/* =========================
+   AUTH BUTTONS
+========================= */
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    height: 40px;
+    padding: 0 15px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.login-link {
+    color: #d8d8df;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.login-link:hover {
+    color: white;
+
+    background: rgba(255, 255, 255, 0.09);
+
+    transform: translateY(-1px);
+}
+
+.signup-link {
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #9b5cff,
+        #743ce0
+    );
+
+    box-shadow:
+        0 8px 20px rgba(116, 60, 224, 0.2);
+}
+
+.signup-link:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 25px rgba(116, 60, 224, 0.3);
+}
+
+@media (max-width: 600px) {
+
+    .auth-link {
+        width: 40px;
+        padding: 0;
+    }
+
+    .auth-link span {
+        display: none;
+    }
+
+    .login-link {
+        font-size: 0;
+    }
+
+    .login-link i,
+    .signup-link i {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .auth-link {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        font-size: 0;
+    }
+
+    .auth-link i {
+        font-size: 14px;
+    }
+
+}
