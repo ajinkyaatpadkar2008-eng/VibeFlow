@@ -1,37 +1,43 @@
-/* =========================================================
-   VIBEFLOW AUTH
-========================================================= */
+/* =====================================================
+   VIBEFLOW AUTHENTICATION
+===================================================== */
 
 
-/* =========================================================
+/* =====================================================
    STORAGE
-========================================================= */
+===================================================== */
 
-const USERS_KEY =
-    "vibeFlowUsers";
+const USERS_KEY = "vibeflowUsers";
 
-const CURRENT_USER_KEY =
-    "vibeFlowCurrentUser";
+const SESSION_KEY = "vibeflowCurrentUser";
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* =====================================================
+   GET USERS
+===================================================== */
 
 function getUsers() {
 
-    return JSON.parse(
-        localStorage.getItem(
-            USERS_KEY
-        ) || "[]"
-    );
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(USERS_KEY) || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
 
 }
 
 
-function saveUsers(
-    users
-) {
+/* =====================================================
+   SAVE USERS
+===================================================== */
+
+function saveUsers(users) {
 
     localStorage.setItem(
         USERS_KEY,
@@ -41,272 +47,90 @@ function saveUsers(
 }
 
 
-function setMessage(
-    element,
-    message,
-    type
-) {
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-    if (!element) {
-        return;
-    }
+function showMessage(message, type = "error") {
 
+    const box =
+        document.getElementById("authMessage");
 
-    element.textContent =
-        message;
+    if (!box) return;
 
-    element.className =
-        "auth-message " +
-        type;
+    box.textContent = message;
+
+    box.className =
+        "auth-message show " + type;
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   HIDE MESSAGE
+===================================================== */
+
+function hideMessage() {
+
+    const box =
+        document.getElementById("authMessage");
+
+    if (!box) return;
+
+    box.className =
+        "auth-message";
+
+    box.textContent = "";
+
+}
+
+
+/* =====================================================
    PASSWORD VISIBILITY
-========================================================= */
+===================================================== */
 
 document
-    .querySelectorAll(
-        ".password-toggle"
-    )
+    .querySelectorAll(".password-toggle")
     .forEach(button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+        button.addEventListener("click", () => {
 
-                const input =
-                    document.getElementById(
-                        button.dataset.target
-                    );
+            const targetId =
+                button.dataset.target;
 
+            const input =
+                document.getElementById(targetId);
 
-                if (!input) {
-                    return;
-                }
+            if (!input) return;
 
 
-                const showing =
-                    input.type ===
-                    "text";
+            if (input.type === "password") {
 
-
-                input.type =
-                    showing
-                        ? "password"
-                        : "text";
-
+                input.type = "text";
 
                 button.innerHTML =
-                    showing
+                    '<i class="fa-regular fa-eye-slash"></i>';
 
-                        ? '<i class="fa-solid fa-eye"></i>'
+            } else {
 
-                        : '<i class="fa-solid fa-eye-slash"></i>';
+                input.type = "password";
+
+                button.innerHTML =
+                    '<i class="fa-regular fa-eye"></i>';
 
             }
-        );
+
+        });
 
     });
 
 
-/* =========================================================
-   SIGNUP
-========================================================= */
-
-const signupForm =
-    document.getElementById(
-        "signupForm"
-    );
-
-
-if (signupForm) {
-
-    signupForm.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-
-            const name =
-                document
-                    .getElementById(
-                        "signupName"
-                    )
-                    .value
-                    .trim();
-
-
-            const email =
-                document
-                    .getElementById(
-                        "signupEmail"
-                    )
-                    .value
-                    .trim()
-                    .toLowerCase();
-
-
-            const password =
-                document
-                    .getElementById(
-                        "signupPassword"
-                    )
-                    .value;
-
-
-            const confirm =
-                document
-                    .getElementById(
-                        "signupConfirm"
-                    )
-                    .value;
-
-
-            const message =
-                document.getElementById(
-                    "signupMessage"
-                );
-
-
-            if (
-                name.length < 2
-            ) {
-
-                setMessage(
-                    message,
-                    "Please enter your name.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            if (
-                password.length < 6
-            ) {
-
-                setMessage(
-                    message,
-                    "Password must be at least 6 characters.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            if (
-                password !== confirm
-            ) {
-
-                setMessage(
-                    message,
-                    "Passwords do not match.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            const users =
-                getUsers();
-
-
-            const exists =
-                users.some(
-                    user =>
-                        user.email ===
-                        email
-                );
-
-
-            if (exists) {
-
-                setMessage(
-                    message,
-                    "An account with this email already exists.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            const newUser = {
-
-                id:
-                    Date.now()
-                    .toString(),
-
-                name,
-
-                email,
-
-                password
-
-            };
-
-
-            users.push(
-                newUser
-            );
-
-
-            saveUsers(
-                users
-            );
-
-
-            localStorage.setItem(
-                CURRENT_USER_KEY,
-                JSON.stringify({
-                    id: newUser.id,
-                    name: newUser.name,
-                    email: newUser.email
-                })
-            );
-
-
-            setMessage(
-                message,
-                "Account created! Redirecting...",
-                "success"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    window.location.href =
-                        "index.html";
-
-                },
-                800
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
+/* =====================================================
    LOGIN
-========================================================= */
+===================================================== */
 
 const loginForm =
-    document.getElementById(
-        "loginForm"
-    );
+    document.getElementById("loginForm");
 
 
 if (loginForm) {
@@ -317,49 +141,26 @@ if (loginForm) {
 
             event.preventDefault();
 
+            hideMessage();
 
-            const email =
+
+            const username =
                 document
-                    .getElementById(
-                        "loginEmail"
-                    )
+                    .getElementById("loginUsername")
                     .value
-                    .trim()
-                    .toLowerCase();
+                    .trim();
 
 
             const password =
                 document
-                    .getElementById(
-                        "loginPassword"
-                    )
+                    .getElementById("loginPassword")
                     .value;
 
 
-            const message =
-                document.getElementById(
-                    "loginMessage"
-                );
+            if (!username || !password) {
 
-
-            const users =
-                getUsers();
-
-
-            const user =
-                users.find(
-                    item =>
-                        item.email === email &&
-                        item.password === password
-                );
-
-
-            if (!user) {
-
-                setMessage(
-                    message,
-                    "Incorrect email or password.",
-                    "error"
+                showMessage(
+                    "Please enter your username and password."
                 );
 
                 return;
@@ -367,32 +168,258 @@ if (loginForm) {
             }
 
 
-            localStorage.setItem(
-                CURRENT_USER_KEY,
-                JSON.stringify({
-                    id: user.id,
-                    name: user.name,
-                    email: user.email
-                })
+            const users = getUsers();
+
+
+            const user =
+                users.find(
+                    item =>
+                        item.username.toLowerCase() ===
+                            username.toLowerCase() &&
+                        item.password === password
+                );
+
+
+            if (!user) {
+
+                showMessage(
+                    "Incorrect username or password."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               CREATE SESSION
+            ----------------------------------------- */
+
+            sessionStorage.setItem(
+                SESSION_KEY,
+                user.username
             );
 
 
-            setMessage(
-                message,
-                "Login successful! Redirecting...",
+            showMessage(
+                "Login successful! Opening VibeFlow...",
                 "success"
             );
 
 
-            setTimeout(
-                () => {
+            setTimeout(() => {
 
-                    window.location.href =
-                        "index.html";
+                window.location.replace(
+                    "index.html"
+                );
 
-                },
-                700
+            }, 500);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SIGNUP
+===================================================== */
+
+const signupForm =
+    document.getElementById("signupForm");
+
+
+if (signupForm) {
+
+    signupForm.addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+            hideMessage();
+
+
+            const username =
+                document
+                    .getElementById("signupUsername")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("signupPassword")
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById("confirmPassword")
+                    .value;
+
+
+            const terms =
+                document
+                    .getElementById("terms")
+                    .checked;
+
+
+            /* -----------------------------------------
+               USERNAME VALIDATION
+            ----------------------------------------- */
+
+            if (username.length < 3) {
+
+                showMessage(
+                    "Username must contain at least 3 characters."
+                );
+
+                return;
+
+            }
+
+
+            if (username.length > 20) {
+
+                showMessage(
+                    "Username cannot be longer than 20 characters."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               USERNAME CHARACTERS
+            ----------------------------------------- */
+
+            const validUsername =
+                /^[a-zA-Z0-9_]+$/;
+
+
+            if (!validUsername.test(username)) {
+
+                showMessage(
+                    "Username can only contain letters, numbers and underscores."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               PASSWORD
+            ----------------------------------------- */
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "Password must contain at least 6 characters."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               CONFIRM PASSWORD
+            ----------------------------------------- */
+
+            if (password !== confirmPassword) {
+
+                showMessage(
+                    "Passwords do not match."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               TERMS
+            ----------------------------------------- */
+
+            if (!terms) {
+
+                showMessage(
+                    "Please accept the terms to continue."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               CHECK EXISTING USER
+            ----------------------------------------- */
+
+            const users = getUsers();
+
+
+            const exists =
+                users.some(
+                    user =>
+                        user.username.toLowerCase() ===
+                        username.toLowerCase()
+                );
+
+
+            if (exists) {
+
+                showMessage(
+                    "That username is already taken."
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               CREATE ACCOUNT
+            ----------------------------------------- */
+
+            users.push({
+
+                username: username,
+
+                password: password,
+
+                createdAt:
+                    new Date().toISOString()
+
+            });
+
+
+            saveUsers(users);
+
+
+            /* -----------------------------------------
+               SUCCESS
+            ----------------------------------------- */
+
+            showMessage(
+                "Account created successfully! Redirecting to login...",
+                "success"
             );
+
+
+            signupForm.reset();
+
+
+            setTimeout(() => {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }, 900);
 
         }
     );
