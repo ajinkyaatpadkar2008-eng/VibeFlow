@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account — VibeFlow</title>
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Authentication CSS -->
+
+    <link rel="stylesheet" href="auth.css">
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <!-- LEFT SIDE -->
+
+    <div class="auth-showcase">
+
+        <div class="showcase-content">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+
+                    <i class="fa-solid fa-wave-square"></i>
+
+                </div>
+
+                <span>
+                    Vibe<span>Flow</span>
+                </span>
+
+            </div>
+
+
+            <div class="showcase-text">
+
+                <span class="eyebrow">
+                    JOIN VIBEFLOW
+                </span>
+
+                <h1>
+                    Music for
+                    <span>your mood.</span>
+                </h1>
+
+                <p>
+                    Create your free VibeFlow account
+                    and keep your music experience
+                    organized.
+                </p>
+
+            </div>
+
+
+            <div class="music-decoration">
+
+                <div class="music-circle circle-one">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+
+                <div class="music-circle circle-two">
+                    <i class="fa-solid fa-compact-disc"></i>
+                </div>
+
+                <div class="music-circle circle-three">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="mobile-brand">
+
+                <div class="brand-icon">
+                    <i class="fa-solid fa-wave-square"></i>
+                </div>
+
+                <span>
+                    Vibe<span>Flow</span>
+                </span>
+
+            </div>
+
+
+            <div class="auth-heading">
+
+                <h2>Create your account</h2>
+
+                <p>
+                    Start your VibeFlow journey
+                </p>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="authMessage"
+                class="auth-message"
+                role="alert"
+            ></div>
+
+
+            <!-- SIGNUP FORM -->
+
+            <form id="signupForm" novalidate>
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="signupName">
+                        Your name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            id="signupName"
+                            type="text"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            maxlength="40"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="signupEmail">
+                        Email address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-envelope"></i>
+
+                        <input
+                            id="signupEmail"
+                            type="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            id="signupPassword"
+                            type="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="signupPassword"
+                            aria-label="Show password"
+                        >
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="password-strength">
+
+                        <div class="strength-bar">
+                            <span id="strengthBar"></span>
+                        </div>
+
+                        <span id="strengthText">
+                            Use at least 6 characters
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="Repeat your password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="confirmPassword"
+                            aria-label="Show password"
+                        >
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="terms">
+
+                    <input
+                        id="terms"
+                        type="checkbox"
+                        required
+                    >
+
+                    <span>
+                        I understand that this demo account
+                        is stored locally in this browser.
+                    </span>
+
+                </label>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="auth-btn"
+                    id="signupButton"
+                >
+
+                    <span>Create Account</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider">
+                <span>OR</span>
+            </div>
+
+
+            <p class="switch-auth">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Sign in
+                </a>
+
+            </p>
+
+
+            <a
+                href="index.html"
+                class="guest-link"
+            >
+
+                <i class="fa-solid fa-headphones"></i>
+
+                Continue without an account
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="auth.js"></script>
+
+</body>
+</html>
