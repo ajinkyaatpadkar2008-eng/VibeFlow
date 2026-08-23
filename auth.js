@@ -1,53 +1,37 @@
-/* =========================================
-   VIBEFLOW AUTHENTICATION
-   LocalStorage demo authentication
-========================================= */
+/* =========================================================
+   VIBEFLOW AUTH
+========================================================= */
 
 
-/* =========================================
-   STORAGE KEYS
-========================================= */
+/* =========================================================
+   STORAGE
+========================================================= */
 
-const USERS_KEY = "vibeflowUsers";
-const CURRENT_USER_KEY = "vibeflowCurrentUser";
+const USERS_KEY =
+    "vibeFlowUsers";
+
+const CURRENT_USER_KEY =
+    "vibeFlowCurrentUser";
 
 
-/* =========================================
-   GET USERS
-========================================= */
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function getUsers() {
 
-    try {
-
-        const users =
-            localStorage.getItem(
-                USERS_KEY
-            );
-
-        return users
-            ? JSON.parse(users)
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Unable to read users:",
-            error
-        );
-
-        return [];
-
-    }
+    return JSON.parse(
+        localStorage.getItem(
+            USERS_KEY
+        ) || "[]"
+    );
 
 }
 
 
-/* =========================================
-   SAVE USERS
-========================================= */
-
-function saveUsers(users) {
+function saveUsers(
+    users
+) {
 
     localStorage.setItem(
         USERS_KEY,
@@ -57,297 +41,79 @@ function saveUsers(users) {
 }
 
 
-/* =========================================
-   CURRENT USER
-========================================= */
-
-function getCurrentUser() {
-
-    try {
-
-        const user =
-            localStorage.getItem(
-                CURRENT_USER_KEY
-            );
-
-        return user
-            ? JSON.parse(user)
-            : null;
-
-    } catch {
-
-        return null;
-
-    }
-
-}
-
-
-/* =========================================
-   SHOW MESSAGE
-========================================= */
-
-function showMessage(
+function setMessage(
+    element,
     message,
-    type = "error"
+    type
 ) {
 
-    const messageBox =
-        document.getElementById(
-            "authMessage"
-        );
+    if (!element) {
+        return;
+    }
 
-    if (!messageBox) return;
 
-    messageBox.textContent =
+    element.textContent =
         message;
 
-    messageBox.className =
-        `auth-message show ${type}`;
+    element.className =
+        "auth-message " +
+        type;
 
 }
 
 
-/* =========================================
-   CLEAR MESSAGE
-========================================= */
-
-function clearMessage() {
-
-    const messageBox =
-        document.getElementById(
-            "authMessage"
-        );
-
-    if (!messageBox) return;
-
-    messageBox.textContent = "";
-
-    messageBox.className =
-        "auth-message";
-
-}
-
-
-/* =========================================
-   EMAIL VALIDATION
-========================================= */
-
-function isValidEmail(email) {
-
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        .test(email);
-
-}
-
-
-/* =========================================
-   PASSWORD STRENGTH
-========================================= */
-
-function getPasswordStrength(password) {
-
-    if (!password) {
-
-        return {
-            score: 0,
-            text: "Use at least 6 characters"
-        };
-
-    }
-
-
-    let score = 0;
-
-
-    if (password.length >= 6) {
-        score++;
-    }
-
-    if (password.length >= 10) {
-        score++;
-    }
-
-    if (/[A-Z]/.test(password)) {
-        score++;
-    }
-
-    if (/[0-9]/.test(password)) {
-        score++;
-    }
-
-    if (/[^A-Za-z0-9]/.test(password)) {
-        score++;
-    }
-
-
-    let text = "Weak";
-
-
-    if (score >= 4) {
-
-        text = "Strong";
-
-    } else if (score >= 2) {
-
-        text = "Good";
-
-    }
-
-
-    return {
-        score,
-        text
-    };
-
-}
-
-
-/* =========================================
-   PASSWORD STRENGTH UI
-========================================= */
-
-const signupPassword =
-    document.getElementById(
-        "signupPassword"
-    );
-
-const strengthBar =
-    document.getElementById(
-        "strengthBar"
-    );
-
-const strengthText =
-    document.getElementById(
-        "strengthText"
-    );
-
-
-if (
-    signupPassword &&
-    strengthBar &&
-    strengthText
-) {
-
-    signupPassword.addEventListener(
-        "input",
-        () => {
-
-            const result =
-                getPasswordStrength(
-                    signupPassword.value
-                );
-
-
-            const percentage =
-                Math.min(
-                    result.score * 20,
-                    100
-                );
-
-
-            strengthBar.style.width =
-                `${percentage}%`;
-
-
-            strengthText.textContent =
-                result.text;
-
-
-            if (
-                !signupPassword.value
-            ) {
-
-                strengthText.textContent =
-                    "Use at least 6 characters";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   SHOW / HIDE PASSWORD
-========================================= */
+/* =========================================================
+   PASSWORD VISIBILITY
+========================================================= */
 
 document
     .querySelectorAll(
         ".password-toggle"
     )
-    .forEach(
-        button => {
+    .forEach(button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-                    const targetId =
-                        button.dataset.target;
-
-
-                    const input =
-                        document.getElementById(
-                            targetId
-                        );
+                const input =
+                    document.getElementById(
+                        button.dataset.target
+                    );
 
 
-                    if (!input) return;
-
-
-                    const icon =
-                        button.querySelector(
-                            "i"
-                        );
-
-
-                    if (
-                        input.type ===
-                        "password"
-                    ) {
-
-                        input.type =
-                            "text";
-
-
-                        icon.className =
-                            "fa-regular fa-eye-slash";
-
-
-                        button.setAttribute(
-                            "aria-label",
-                            "Hide password"
-                        );
-
-                    } else {
-
-                        input.type =
-                            "password";
-
-
-                        icon.className =
-                            "fa-regular fa-eye";
-
-
-                        button.setAttribute(
-                            "aria-label",
-                            "Show password"
-                        );
-
-                    }
-
+                if (!input) {
+                    return;
                 }
-            );
-
-        }
-    );
 
 
-/* =========================================
+                const showing =
+                    input.type ===
+                    "text";
+
+
+                input.type =
+                    showing
+                        ? "password"
+                        : "text";
+
+
+                button.innerHTML =
+                    showing
+
+                        ? '<i class="fa-solid fa-eye"></i>'
+
+                        : '<i class="fa-solid fa-eye-slash"></i>';
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
    SIGNUP
-========================================= */
+========================================================= */
 
 const signupForm =
     document.getElementById(
@@ -362,8 +128,6 @@ if (signupForm) {
         event => {
 
             event.preventDefault();
-
-            clearMessage();
 
 
             const name =
@@ -393,103 +157,70 @@ if (signupForm) {
                     .value;
 
 
-            const confirmPassword =
+            const confirm =
                 document
                     .getElementById(
-                        "confirmPassword"
+                        "signupConfirm"
                     )
                     .value;
 
 
-            const terms =
-                document
-                    .getElementById(
-                        "terms"
-                    )
-                    .checked;
+            const message =
+                document.getElementById(
+                    "signupMessage"
+                );
 
-
-            /* NAME */
 
             if (
                 name.length < 2
             ) {
 
-                showMessage(
-                    "Please enter your name."
+                setMessage(
+                    message,
+                    "Please enter your name.",
+                    "error"
                 );
 
                 return;
 
             }
 
-
-            /* EMAIL */
-
-            if (
-                !isValidEmail(email)
-            ) {
-
-                showMessage(
-                    "Please enter a valid email address."
-                );
-
-                return;
-
-            }
-
-
-            /* PASSWORD */
 
             if (
                 password.length < 6
             ) {
 
-                showMessage(
-                    "Password must contain at least 6 characters."
+                setMessage(
+                    message,
+                    "Password must be at least 6 characters.",
+                    "error"
                 );
 
                 return;
 
             }
 
-
-            /* CONFIRM PASSWORD */
 
             if (
-                password !==
-                confirmPassword
+                password !== confirm
             ) {
 
-                showMessage(
-                    "Passwords do not match."
+                setMessage(
+                    message,
+                    "Passwords do not match.",
+                    "error"
                 );
 
                 return;
 
             }
 
-
-            /* TERMS */
-
-            if (!terms) {
-
-                showMessage(
-                    "Please confirm that you understand how this demo stores account data."
-                );
-
-                return;
-
-            }
-
-
-            /* EXISTING USERS */
 
             const users =
                 getUsers();
 
 
-            const alreadyExists =
+            const exists =
                 users.some(
                     user =>
                         user.email ===
@@ -497,10 +228,12 @@ if (signupForm) {
                 );
 
 
-            if (alreadyExists) {
+            if (exists) {
 
-                showMessage(
-                    "An account with this email already exists. Please sign in."
+                setMessage(
+                    message,
+                    "An account with this email already exists.",
+                    "error"
                 );
 
                 return;
@@ -508,21 +241,17 @@ if (signupForm) {
             }
 
 
-            /* CREATE USER */
-
             const newUser = {
 
                 id:
-                    generateUserId(),
+                    Date.now()
+                    .toString(),
 
                 name,
 
                 email,
 
-                password,
-
-                createdAt:
-                    new Date().toISOString()
+                password
 
             };
 
@@ -537,8 +266,6 @@ if (signupForm) {
             );
 
 
-            /* LOG USER IN */
-
             localStorage.setItem(
                 CURRENT_USER_KEY,
                 JSON.stringify({
@@ -549,20 +276,11 @@ if (signupForm) {
             );
 
 
-            showMessage(
-                "Account created successfully! Opening VibeFlow...",
+            setMessage(
+                message,
+                "Account created! Redirecting...",
                 "success"
             );
-
-
-            const signupButton =
-                document.getElementById(
-                    "signupButton"
-                );
-
-
-            signupButton.disabled =
-                true;
 
 
             setTimeout(
@@ -572,7 +290,7 @@ if (signupForm) {
                         "index.html";
 
                 },
-                900
+                800
             );
 
         }
@@ -581,9 +299,9 @@ if (signupForm) {
 }
 
 
-/* =========================================
+/* =========================================================
    LOGIN
-========================================= */
+========================================================= */
 
 const loginForm =
     document.getElementById(
@@ -598,8 +316,6 @@ if (loginForm) {
         event => {
 
             event.preventDefault();
-
-            clearMessage();
 
 
             const email =
@@ -620,41 +336,11 @@ if (loginForm) {
                     .value;
 
 
-            const rememberMe =
-                document
-                    .getElementById(
-                        "rememberMe"
-                    )
-                    .checked;
-
-
-            /* VALIDATE */
-
-            if (
-                !isValidEmail(email)
-            ) {
-
-                showMessage(
-                    "Please enter a valid email address."
+            const message =
+                document.getElementById(
+                    "loginMessage"
                 );
 
-                return;
-
-            }
-
-
-            if (!password) {
-
-                showMessage(
-                    "Please enter your password."
-                );
-
-                return;
-
-            }
-
-
-            /* FIND USER */
 
             const users =
                 getUsers();
@@ -663,81 +349,39 @@ if (loginForm) {
             const user =
                 users.find(
                     item =>
-                        item.email ===
-                        email
+                        item.email === email &&
+                        item.password === password
                 );
 
 
             if (!user) {
 
-                showMessage(
-                    "No account was found with that email address."
+                setMessage(
+                    message,
+                    "Incorrect email or password.",
+                    "error"
                 );
 
                 return;
 
             }
 
-
-            /* CHECK PASSWORD */
-
-            if (
-                user.password !==
-                password
-            ) {
-
-                showMessage(
-                    "Incorrect password. Please try again."
-                );
-
-                return;
-
-            }
-
-
-            /* SAVE CURRENT USER */
-
-            const session = {
-
-                id: user.id,
-
-                name: user.name,
-
-                email: user.email
-
-            };
-
-
-            /*
-                For this localStorage version,
-                both options use localStorage.
-
-                "Remember me" is kept in the UI
-                for future authentication upgrades.
-            */
 
             localStorage.setItem(
                 CURRENT_USER_KEY,
-                JSON.stringify(
-                    session
-                )
+                JSON.stringify({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                })
             );
 
 
-            showMessage(
-                `Welcome back, ${user.name}! Opening VibeFlow...`,
+            setMessage(
+                message,
+                "Login successful! Redirecting...",
                 "success"
             );
-
-
-            const loginButton =
-                document.getElementById(
-                    "loginButton"
-                );
-
-
-            loginButton.disabled =
-                true;
 
 
             setTimeout(
@@ -751,24 +395,6 @@ if (loginForm) {
             );
 
         }
-    );
-
-}
-
-
-/* =========================================
-   USER ID
-========================================= */
-
-function generateUserId() {
-
-    return (
-        "vf_" +
-        Date.now().toString(36) +
-        "_" +
-        Math.random()
-            .toString(36)
-            .substring(2, 8)
     );
 
 }
