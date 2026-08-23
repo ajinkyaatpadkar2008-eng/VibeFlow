@@ -1,427 +1,152 @@
-/* =====================================================
-   VIBEFLOW AUTHENTICATION
-===================================================== */
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
 
-/* =====================================================
-   STORAGE
-===================================================== */
+    <meta charset="UTF-8">
 
-const USERS_KEY = "vibeflowUsers";
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
 
-const SESSION_KEY = "vibeflowCurrentUser";
+    <meta
+        name="theme-color"
+        content="#08070c"
+    >
 
+    <title>Login — VibeFlow</title>
 
-/* =====================================================
-   GET USERS
-===================================================== */
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-function getUsers() {
+    <link rel="stylesheet" href="auth.css">
 
-    try {
+</head>
 
-        return JSON.parse(
-            localStorage.getItem(USERS_KEY) || "[]"
-        );
 
-    } catch (error) {
+<body>
 
-        return [];
+<div class="auth-page">
 
-    }
+    <div class="auth-card">
 
-}
+        <a
+            href="index.html"
+            class="auth-logo"
+        >
 
+            <span class="auth-logo-icon">
+                <i class="fa-solid fa-wave-square"></i>
+            </span>
 
-/* =====================================================
-   SAVE USERS
-===================================================== */
+            <strong>
+                Vibe<span>Flow</span>
+            </strong>
 
-function saveUsers(users) {
+        </a>
 
-    localStorage.setItem(
-        USERS_KEY,
-        JSON.stringify(users)
-    );
 
-}
+        <div class="auth-heading">
 
+            <h1>
+                Welcome back
+            </h1>
 
-/* =====================================================
-   MESSAGE
-===================================================== */
+            <p>
+                Login to continue listening.
+            </p>
 
-function showMessage(message, type = "error") {
+        </div>
 
-    const box =
-        document.getElementById("authMessage");
 
-    if (!box) return;
+        <form
+            id="loginForm"
+            class="auth-form"
+        >
 
-    box.textContent = message;
+            <label for="loginEmail">
+                Email
+            </label>
 
-    box.className =
-        "auth-message show " + type;
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+            >
 
-}
 
+            <label for="loginPassword">
+                Password
+            </label>
 
-/* =====================================================
-   HIDE MESSAGE
-===================================================== */
+            <div class="password-field">
 
-function hideMessage() {
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
 
-    const box =
-        document.getElementById("authMessage");
+                <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="loginPassword"
+                >
+                    <i class="fa-solid fa-eye"></i>
+                </button>
 
-    if (!box) return;
+            </div>
 
-    box.className =
-        "auth-message";
 
-    box.textContent = "";
+            <button
+                type="submit"
+                class="auth-submit"
+            >
+                Login
+            </button>
 
-}
 
+            <div
+                id="loginMessage"
+                class="auth-message"
+            ></div>
 
-/* =====================================================
-   PASSWORD VISIBILITY
-===================================================== */
+        </form>
 
-document
-    .querySelectorAll(".password-toggle")
-    .forEach(button => {
 
-        button.addEventListener("click", () => {
+        <p class="auth-switch">
 
-            const targetId =
-                button.dataset.target;
+            Don't have an account?
 
-            const input =
-                document.getElementById(targetId);
+            <a href="signup.html">
+                Sign up
+            </a>
 
-            if (!input) return;
+        </p>
 
 
-            if (input.type === "password") {
+        <a
+            href="index.html"
+            class="back-home"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to VibeFlow
+        </a>
 
-                input.type = "text";
+    </div>
 
-                button.innerHTML =
-                    '<i class="fa-regular fa-eye-slash"></i>';
+</div>
 
-            } else {
 
-                input.type = "password";
+<script src="auth.js"></script>
 
-                button.innerHTML =
-                    '<i class="fa-regular fa-eye"></i>';
+</body>
 
-            }
-
-        });
-
-    });
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-const loginForm =
-    document.getElementById("loginForm");
-
-
-if (loginForm) {
-
-    loginForm.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-            hideMessage();
-
-
-            const username =
-                document
-                    .getElementById("loginUsername")
-                    .value
-                    .trim();
-
-
-            const password =
-                document
-                    .getElementById("loginPassword")
-                    .value;
-
-
-            if (!username || !password) {
-
-                showMessage(
-                    "Please enter your username and password."
-                );
-
-                return;
-
-            }
-
-
-            const users = getUsers();
-
-
-            const user =
-                users.find(
-                    item =>
-                        item.username.toLowerCase() ===
-                            username.toLowerCase() &&
-                        item.password === password
-                );
-
-
-            if (!user) {
-
-                showMessage(
-                    "Incorrect username or password."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               CREATE SESSION
-            ----------------------------------------- */
-
-            sessionStorage.setItem(
-                SESSION_KEY,
-                user.username
-            );
-
-
-            showMessage(
-                "Login successful! Opening VibeFlow...",
-                "success"
-            );
-
-
-            setTimeout(() => {
-
-                window.location.replace(
-                    "index.html"
-                );
-
-            }, 500);
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   SIGNUP
-===================================================== */
-
-const signupForm =
-    document.getElementById("signupForm");
-
-
-if (signupForm) {
-
-    signupForm.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-            hideMessage();
-
-
-            const username =
-                document
-                    .getElementById("signupUsername")
-                    .value
-                    .trim();
-
-
-            const password =
-                document
-                    .getElementById("signupPassword")
-                    .value;
-
-
-            const confirmPassword =
-                document
-                    .getElementById("confirmPassword")
-                    .value;
-
-
-            const terms =
-                document
-                    .getElementById("terms")
-                    .checked;
-
-
-            /* -----------------------------------------
-               USERNAME VALIDATION
-            ----------------------------------------- */
-
-            if (username.length < 3) {
-
-                showMessage(
-                    "Username must contain at least 3 characters."
-                );
-
-                return;
-
-            }
-
-
-            if (username.length > 20) {
-
-                showMessage(
-                    "Username cannot be longer than 20 characters."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               USERNAME CHARACTERS
-            ----------------------------------------- */
-
-            const validUsername =
-                /^[a-zA-Z0-9_]+$/;
-
-
-            if (!validUsername.test(username)) {
-
-                showMessage(
-                    "Username can only contain letters, numbers and underscores."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               PASSWORD
-            ----------------------------------------- */
-
-            if (password.length < 6) {
-
-                showMessage(
-                    "Password must contain at least 6 characters."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               CONFIRM PASSWORD
-            ----------------------------------------- */
-
-            if (password !== confirmPassword) {
-
-                showMessage(
-                    "Passwords do not match."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               TERMS
-            ----------------------------------------- */
-
-            if (!terms) {
-
-                showMessage(
-                    "Please accept the terms to continue."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               CHECK EXISTING USER
-            ----------------------------------------- */
-
-            const users = getUsers();
-
-
-            const exists =
-                users.some(
-                    user =>
-                        user.username.toLowerCase() ===
-                        username.toLowerCase()
-                );
-
-
-            if (exists) {
-
-                showMessage(
-                    "That username is already taken."
-                );
-
-                return;
-
-            }
-
-
-            /* -----------------------------------------
-               CREATE ACCOUNT
-            ----------------------------------------- */
-
-            users.push({
-
-                username: username,
-
-                password: password,
-
-                createdAt:
-                    new Date().toISOString()
-
-            });
-
-
-            saveUsers(users);
-
-
-            /* -----------------------------------------
-               SUCCESS
-            ----------------------------------------- */
-
-            showMessage(
-                "Account created successfully! Redirecting to login...",
-                "success"
-            );
-
-
-            signupForm.reset();
-
-
-            setTimeout(() => {
-
-                window.location.replace(
-                    "login.html"
-                );
-
-            }, 900);
-
-        }
-    );
-
-}
+</html>
