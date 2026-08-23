@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VibeFlow — Music Player</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-wave-square"></i>
+            </div>
+            <span>Vibe<span>Flow</span></span>
+        </div>
+
+        <nav>
+
+            <p class="nav-title">MENU</p>
+
+            <button class="nav-item active" data-page="home">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item" data-page="discover">
+                <i class="fa-solid fa-compass"></i>
+                <span>Discover</span>
+            </button>
+
+            <button class="nav-item" data-page="favorites">
+                <i class="fa-solid fa-heart"></i>
+                <span>Favorites</span>
+            </button>
+
+            <p class="nav-title">YOUR MUSIC</p>
+
+            <button class="nav-item" data-page="recent">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Recently Played</span>
+            </button>
+
+            <button class="nav-item" data-page="playlist">
+                <i class="fa-solid fa-list"></i>
+                <span>My Playlist</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <span>VibeFlow</span>
+            <small>Music for your mood.</small>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search songs, artists or albums..."
+                    autocomplete="off"
+                >
+
+                <button id="clearSearch" class="clear-search">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+            <div class="profile">
+                <div class="avatar">A</div>
+                <span>Guest</span>
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- HERO -->
+            <section class="hero">
+
+                <div class="hero-text">
+
+                    <span class="eyebrow">
+                        YOUR MUSIC. YOUR VIBE.
+                    </span>
+
+                    <h1>
+                        Find your next
+                        <span>favorite song.</span>
+                    </h1>
+
+                    <p>
+                        Search millions of tracks and discover
+                        music for every mood.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button id="heroPlay" class="primary-btn">
+                            <i class="fa-solid fa-play"></i>
+                            Play Music
+                        </button>
+
+                        <button id="heroShuffle" class="secondary-btn">
+                            <i class="fa-solid fa-shuffle"></i>
+                            Shuffle
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-art">
+
+                    <div class="vinyl">
+                        <div class="vinyl-center"></div>
+                    </div>
+
+                    <div class="floating-note note-one">
+                        ♪
+                    </div>
+
+                    <div class="floating-note note-two">
+                        ♫
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATUS -->
+            <div id="status" class="status">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                Loading music...
+            </div>
+
+
+            <!-- QUICK PICKS -->
+            <section class="section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label">
+                            DISCOVER
+                        </span>
+
+                        <h2 id="sectionTitle">
+                            Quick Picks
+                        </h2>
+                    </div>
+
+                    <button id="viewAll">
+                        View all
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+                <div id="songGrid" class="song-grid"></div>
+
+            </section>
+
+
+            <!-- GENRES -->
+            <section class="section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label">
+                            EXPLORE
+                        </span>
+
+                        <h2>Browse by mood</h2>
+                    </div>
+
+                </div>
+
+                <div class="genres">
+
+                    <button data-search="Pop">
+                        <i class="fa-solid fa-music"></i>
+                        <span>Pop</span>
+                    </button>
+
+                    <button data-search="Rock">
+                        <i class="fa-solid fa-guitar"></i>
+                        <span>Rock</span>
+                    </button>
+
+                    <button data-search="Hip Hop">
+                        <i class="fa-solid fa-microphone"></i>
+                        <span>Hip Hop</span>
+                    </button>
+
+                    <button data-search="Electronic">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Electronic</span>
+                    </button>
+
+                   <button data-search="Jazz">
+    <i class="fa-solid fa-music"></i>
+    <span>Jazz</span>
+</button>
+    
+    
+
+                    <button data-search="Classical">
+                        <i class="fa-solid fa-music"></i>
+                        <span>Classical</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECENT -->
+            <section class="section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label">
+                            YOUR HISTORY
+                        </span>
+
+                        <h2>Recently Played</h2>
+                    </div>
+
+                </div>
+
+                <div id="recentList" class="recent-list"></div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- PLAYER -->
+<div class="player">
+
+    <div class="now-playing">
+
+        <img
+            id="playerCover"
+            src=""
+            alt="Album artwork"
+        >
+
+        <div class="now-info">
+
+            <strong id="playerTitle">
+                Choose a song
+            </strong>
+
+            <span id="playerArtist">
+                VibeFlow
+            </span>
+
+        </div>
+
+        <button id="playerFavorite" class="icon-btn">
+            <i class="fa-regular fa-heart"></i>
+        </button>
+
+    </div>
+
+
+    <div class="player-center">
+
+        <div class="controls">
+
+            <button id="shuffleBtn" class="control">
+                <i class="fa-solid fa-shuffle"></i>
+            </button>
+
+            <button id="previousBtn" class="control big">
+                <i class="fa-solid fa-backward-step"></i>
+            </button>
+
+            <button id="playBtn" class="play-btn">
+                <i class="fa-solid fa-play"></i>
+            </button>
+
+            <button id="nextBtn" class="control big">
+                <i class="fa-solid fa-forward-step"></i>
+            </button>
+
+            <button id="repeatBtn" class="control">
+                <i class="fa-solid fa-repeat"></i>
+            </button>
+
+        </div>
+
+        <div class="progress-area">
+
+            <span id="currentTime">0:00</span>
+
+            <input
+                id="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+            >
+
+            <span id="duration">0:00</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="volume-area">
+
+        <button id="muteBtn" class="icon-btn">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.8"
+        >
+
+    </div>
+
+</div>
+
+
+<!-- AUDIO -->
+<audio id="audio" preload="metadata"></audio>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
