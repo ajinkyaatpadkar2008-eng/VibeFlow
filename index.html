@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    if (!sessionStorage.getItem("vibeflowCurrentUser")) {
+        window.location.replace("login.html");
+    }
+</script>
 
     <meta charset="UTF-8">
 
